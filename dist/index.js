@@ -10,6 +10,7 @@ dotenv_1.default.config();
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 const port = process.env.PORT || 3000;
+console.log(process.env.base_url);
 app.use("/", auth_1.default);
 app.listen(port, () => {
     console.log(`⚡️[server]: Server is running at https://localhost:${port}`);
