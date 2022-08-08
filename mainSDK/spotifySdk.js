@@ -1,3 +1,3 @@
 export function Spotify() {
-  this.name = "Nnaji";
+  this.baseUrl = "https://api.spotify.com";
 }
