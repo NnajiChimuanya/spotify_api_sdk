@@ -1,0 +1,21 @@
+{
+  "name": "spotify_api_sdk",
+  "version": "1.0.0",
+  "description": "This is an npm package that helps developers better interact with the spotify web api",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "[\"spotify\"",
+    "\"sdk\"",
+    "\"token\"",
+    "\"track\"",
+    "\"playlist\"",
+    "\"user\"",
+    "\"authentication\"",
+    "\"authorization\"]"
+  ],
+  "author": "Nnaji Chimuanya",
+  "license": "ISC"
+}
