@@ -17,5 +17,9 @@
     "\"authorization\"]"
   ],
   "author": "Nnaji Chimuanya",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1"
+  }
 }
