@@ -43,14 +43,15 @@ authRouter.get("/auth/callback", (req, res) => {
                 grant_type: 'authorization_code'
             },
             headers: {
-                'Authorization': 'Basic ' + (process.env.client_id + ':' + process.env.client_secret).toString()
+                'Authorization': 'Basic ' + (new Buffer(process.env.client_id + ':' + process.env.client_secret).toString('base64'))
             },
             json: true
         };
         post(authOptions, (err, data) => {
             if (err)
                 console.log(err);
-            res.send(data);
+            res.cookie('token', data.body.access_token);
+            res.json(data.body);
         });
     }
 });

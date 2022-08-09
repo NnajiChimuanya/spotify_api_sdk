@@ -2,7 +2,8 @@ import express, {Express, Router, Request, Response } from "express"
 const authRouter: Router = express.Router()
 import querystring from "query-string"
 import pkg from "request"
-const { post } = pkg
+const { post} = pkg
+
 
 const scope = [
     "user-read-currently-playing",
@@ -47,17 +48,16 @@ authRouter.get("/auth/callback", (req: Request, res :Response) => {
         grant_type: 'authorization_code'
       },
       headers: {
-        'Authorization': 'Basic ' + (process.env.client_id + ':' + process.env.client_secret).toString()
+        'Authorization': 'Basic ' + (new Buffer(process.env.client_id + ':' + process.env.client_secret).toString('base64'))
       },
       json: true
     };
-
     post(authOptions, (err, data) => {
       if(err) console.log(err)
-      res.send(data)
+      res.cookie('token', data.body.access_token)
+      res.json(data.body)
     } )
    
-  
   }
 })
 
