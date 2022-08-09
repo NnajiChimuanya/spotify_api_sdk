@@ -6,6 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const authRouter = express_1.default.Router();
 const query_string_1 = __importDefault(require("query-string"));
+const request_1 = __importDefault(require("request"));
+const { post } = request_1.default;
 const scope = [
     "user-read-currently-playing",
     "user-read-recently-played",
@@ -20,11 +22,36 @@ authRouter.get("/auth", (req, res) => {
             client_id: process.env.client_id,
             scope: scope,
             redirect_uri: process.env.callback_url,
-            state: "Heyy"
+            state: process.env.state
         }));
-    //   res.redirect(`https://accounts.spotify.com/authorize?client_id=${process.env.client_id}&redirect_uri=${process.env.callback_url}&scope=${scope.join("%20")}&response_type=token&show_dialog=true`);
 });
 authRouter.get("/auth/callback", (req, res) => {
-    res.send("Heyy");
+    let code = req.query.code || null;
+    let state = req.query.state || null;
+    if (state === null) {
+        res.redirect('/#' +
+            query_string_1.default.stringify({
+                error: 'state_mismatch'
+            }));
+    }
+    else {
+        var authOptions = {
+            url: 'https://accounts.spotify.com/api/token',
+            form: {
+                code: code,
+                redirect_uri: process.env.callback_url,
+                grant_type: 'authorization_code'
+            },
+            headers: {
+                'Authorization': 'Basic ' + (process.env.client_id + ':' + process.env.client_secret).toString()
+            },
+            json: true
+        };
+        post(authOptions, (err, data) => {
+            if (err)
+                console.log(err);
+            res.send(data);
+        });
+    }
 });
 exports.default = authRouter;
