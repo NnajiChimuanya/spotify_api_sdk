@@ -1,6 +1,7 @@
 import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import authRouter from "./routes/auth"
+import playlistRouter from './routes/playlist';
 import cookieParser from "cookie-parser"
 
 dotenv.config();
@@ -13,6 +14,7 @@ console.log(process.env.base_url)
 
 app.use(cookieParser())
 app.use("/", authRouter)
+app.use("/", playlistRouter)
 
 
 
